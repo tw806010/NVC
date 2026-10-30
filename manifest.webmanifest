@@ -1,0 +1,15 @@
+{
+  "id": "./",
+  "name": "好好說｜非暴力溝通練習室",
+  "short_name": "好好說",
+  "lang": "zh-Hant",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f8f7f2",
+  "theme_color": "#245849",
+  "description": "用互動圖卡練習觀察、感受、需要與請求。",
+  "icons": [
+    { "src": "icon.png", "sizes": "1254x1254", "type": "image/png", "purpose": "any" }
+  ]
+}
