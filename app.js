@@ -50,3 +50,10 @@ $('scenario-grid').addEventListener('click',e=>{const b=e.target.closest('[data-
 $('steps').addEventListener('click',e=>{const b=e.target.closest('[data-step]');if(b&&!b.disabled){saveInputs();step=Number(b.dataset.step);renderPractice();}});
 $('editor').addEventListener('click',async e=>{const b=e.target.closest('button');if(!b)return;saveInputs();if(b.dataset.term){const list=state[b.dataset.key],t=b.dataset.term;const i=list.indexOf(t);if(i<0)list.push(t);else list.splice(i,1);b.setAttribute('aria-pressed',String(i<0));return;}switch(b.dataset.action){case 'next':if(!validStep()){$('validation').textContent='請先填寫內容，或選擇至少一個比較貼近自己的詞。';return;}step++;renderPractice();break;case 'back':step--;renderPractice();break;case 'pause':toast('可以先休息，等你準備好再回來。');break;case 'copy':try{await navigator.clipboard.writeText($('result').value);toast('已複製表達內容。');}catch{$('result').select();toast('請使用鍵盤或長按，複製已選取的文字。');}break;case 'download':downloadCard();break;case 'reset':if(confirm('要清除目前內容，開始新的練習嗎？')){state={observation:'',feelings:[],needs:[],extraFeeling:'',extraNeed:'',request:''};step=0;renderPractice();}break;}});
 showLesson(0);renderPractice();
+
+document.addEventListener('nvc-ai-apply',event=>{
+const r=event.detail;if(!r||r.safetyConcern)return;saveInputs();
+if(Object.values(state).some(v=>Array.isArray(v)?v.length:String(v).trim())&&!confirm('套用 AI 建議將取代目前的手動練習內容。要繼續嗎？'))return;
+state={observation:r.observation.slice(0,600),feelings:[],needs:[],extraFeeling:r.feelings.join('、').slice(0,100),extraNeed:r.needs.join('、').slice(0,100),request:r.request.slice(0,600)};
+step=1;renderPractice();location.hash='practice';toast('已帶入建議，請逐步確認並修改。');
+});

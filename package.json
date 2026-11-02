@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "check": "node --check app.js && node tests/check.cjs",
+    "check": "node --check app.js && node --check ai.js && node tests/check.cjs && node tests/worker.test.mjs && node tests/ai.test.cjs",
     "start": "node server.cjs"
   }
 }

@@ -1,6 +1,6 @@
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
 const elements={};
-const sandbox={document:{getElementById(id){return elements[id]??={innerHTML:'',addEventListener(){}};}},console,setTimeout};
+const sandbox={document:{addEventListener(){},getElementById(id){return elements[id]??={innerHTML:'',addEventListener(){}};}},console,setTimeout};
 vm.createContext(sandbox);vm.runInContext(fs.readFileSync('app.js','utf8'),sandbox);
 vm.runInContext(`
 if(lessons.length!==8||scenarios.length!==6)throw Error('內容數量不符');
